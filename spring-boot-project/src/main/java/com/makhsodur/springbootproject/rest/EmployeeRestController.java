@@ -1,14 +1,13 @@
-package com.luv2code.springboot.cruddemo.rest;
+package com.makhsodur.springbootproject.rest;
 
 import java.util.List;
 
+import com.makhsodur.springbootproject.dao.EmployeeDAO;
+import com.makhsodur.springbootproject.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.luv2code.springboot.cruddemo.dao.EmployeeDAO;
-import com.luv2code.springboot.cruddemo.entity.Employee;
 
 @RestController
 @RequestMapping("/api")
