@@ -30,6 +30,12 @@ public class EmployeeRestController {
 		return employeeService.findById(employeeId);
 	}
 
+	@PostMapping("/employees")
+	public Employee saveEmploye(@RequestBody Employee employee){
+		Employee employees =  employeeService.save(employee);
+		return  employees;
+	}
+
 	
 }
 
