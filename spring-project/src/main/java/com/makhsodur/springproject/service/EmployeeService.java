@@ -15,4 +15,6 @@ public interface EmployeeService {
     public Employee getNames(String firstName, String lastName);
 
     public List<Employee> getNamesUseOr(String firstName, String lastName);
+
+    public List<Employee> getAllEmployeePagination(int pageNo, int pageSize);
 }

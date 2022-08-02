@@ -3,6 +3,8 @@ import com.makhsodur.springproject.dao.EmployeeRepository;
 import com.makhsodur.springproject.entity.Employee;
 import com.makhsodur.springproject.exceptions.EmployeeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,5 +60,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getNamesUseOr(String firstName, String lastName) {
         return employeeRepository.findByFirstNameOrLastName(firstName,lastName);
+    }
+
+    @Override
+    public List<Employee> getAllEmployeePagination(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo -1,pageSize);
+        return employeeRepository.findAll(pageable).getContent();
     }
 }

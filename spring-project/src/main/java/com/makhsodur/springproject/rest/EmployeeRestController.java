@@ -2,14 +2,13 @@ package com.makhsodur.springproject.rest;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Locale;
+
 import com.makhsodur.springproject.entity.Employee;
 import com.makhsodur.springproject.exceptions.EmployeeNotFoundException;
 import com.makhsodur.springproject.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -80,7 +79,19 @@ public class EmployeeRestController {
 		return list;
 	}
 
+	@GetMapping("/pagination")
+	public List<Employee> pagination(@RequestParam int pageNo, @RequestParam int pageSize){
+		return employeeService.getAllEmployeePagination(pageNo,pageSize);
 
+//		List<EmployeeResponse> employees = new ArrayList<>();
+//
+//		employeeList.stream().forEach(student -> {
+//			employees.add(new EmployeeResponse(student));
+//		});
+
+//		return employeeList;
+
+	}
 
 }
 
