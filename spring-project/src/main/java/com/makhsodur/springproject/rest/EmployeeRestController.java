@@ -74,6 +74,12 @@ public class EmployeeRestController {
 		return employeeService.getNames(firstName,lastName);
 	}
 
+	@GetMapping("/getNamesUseOr/{firstName}/{lastName}")
+	public List<Employee> getNamesUseOr(@PathVariable String firstName, @PathVariable String lastName){
+		List<Employee> list= employeeService.getNamesUseOr(firstName,lastName);
+		return list;
+	}
+
 
 
 }

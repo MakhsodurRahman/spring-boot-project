@@ -54,4 +54,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee getNames(String firstName, String lastName) {
         return employeeRepository.findByFirstNameAndLastName(firstName,lastName);
     }
+
+    @Override
+    public List<Employee> getNamesUseOr(String firstName, String lastName) {
+        return employeeRepository.findByFirstNameOrLastName(firstName,lastName);
+    }
 }

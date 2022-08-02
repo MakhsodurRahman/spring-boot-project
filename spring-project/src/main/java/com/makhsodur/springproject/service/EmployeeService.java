@@ -13,4 +13,6 @@ public interface EmployeeService {
     public void deleteById(int id);
 
     public Employee getNames(String firstName, String lastName);
+
+    public List<Employee> getNamesUseOr(String firstName, String lastName);
 }

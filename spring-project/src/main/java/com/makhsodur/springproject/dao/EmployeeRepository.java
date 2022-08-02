@@ -11,4 +11,5 @@ import java.util.List;
 @EnableJpaRepositories
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     Employee findByFirstNameAndLastName(String firstName,String lastName);
+    List<Employee> findByFirstNameOrLastName(String firstName, String lastName);
 }
