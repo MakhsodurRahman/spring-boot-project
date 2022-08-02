@@ -2,18 +2,22 @@ package com.makhsodur.springproject.rest;
 
 import java.net.URI;
 import java.util.List;
-
+import java.util.Locale;
 import com.makhsodur.springproject.entity.Employee;
 import com.makhsodur.springproject.exceptions.EmployeeNotFoundException;
 import com.makhsodur.springproject.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api")
 public class EmployeeRestController {
+	@Autowired
+	private MessageSource messageSource;
 
 	private EmployeeService employeeService;
 
@@ -24,7 +28,7 @@ public class EmployeeRestController {
 
 	// expose "/employees" and return list of employees
 	@GetMapping("/employees")
-	public List<Employee> findAll() {
+	public List<Employee> findAll(){
 		return employeeService.findAll();
 	}
 
@@ -36,6 +40,7 @@ public class EmployeeRestController {
 		}
 		return employee;
 	}
+
 
 	@PostMapping("/employees")
 	public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee){
@@ -63,6 +68,12 @@ public class EmployeeRestController {
 		employeeService.deleteById(employeeId);
 		return "employee deleted : 	"+ employeeId;
 	}
+
+	@GetMapping("/getNames/{firstName}/{lastName}")
+	public Employee getNames(@PathVariable String firstName, @PathVariable String lastName){
+		return employeeService.getNames(firstName,lastName);
+	}
+
 
 
 }

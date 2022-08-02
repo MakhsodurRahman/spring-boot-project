@@ -2,12 +2,13 @@ package com.makhsodur.springproject.dao;
 
 import com.makhsodur.springproject.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.Repository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
 
-@RepositoryRestResource(path = "members")
+@Repository
+@EnableJpaRepositories
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
-
+    Employee findByFirstNameAndLastName(String firstName,String lastName);
 }
