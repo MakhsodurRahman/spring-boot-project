@@ -1,10 +1,13 @@
 package com.makhsodur.springproject.rest;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.makhsodur.springproject.entity.Employee;
 import com.makhsodur.springproject.exceptions.EmployeeNotFoundException;
+import com.makhsodur.springproject.request.CreateEmployeeRequest;
+import com.makhsodur.springproject.response.EmployeesResponse;
 import com.makhsodur.springproject.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -27,8 +30,16 @@ public class EmployeeRestController {
 
 	// expose "/employees" and return list of employees
 	@GetMapping("/employees")
-	public List<Employee> findAll(){
-		return employeeService.findAll();
+	public List<EmployeesResponse> findAll(){
+
+
+		List<Employee> employeeList = employeeService.findAll();
+		List<EmployeesResponse> responseList = new  ArrayList<>();
+		employeeList.stream().forEach(employee -> {
+			responseList.add(new EmployeesResponse(employee));
+		});
+		return responseList;
+
 	}
 
 	@GetMapping("/employees/{employeeId}")
@@ -42,7 +53,9 @@ public class EmployeeRestController {
 
 
 	@PostMapping("/employees")
-	public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee){
+	public ResponseEntity<CreateEmployeeRequest> saveEmployee(@RequestBody CreateEmployeeRequest createEmployeeRequest){
+		Employee employee = new Employee(createEmployeeRequest);
+
 		Employee employees =  employeeService.save(employee);
 
 		URI location = ServletUriComponentsBuilder
@@ -79,6 +92,11 @@ public class EmployeeRestController {
 		return list;
 	}
 
+	@PutMapping("/updateEmployee/{id}/{firstName}")
+	public String updateEmployee(@PathVariable int id, @PathVariable String firstName){
+		return employeeService.updateEmployeee(id,firstName)+" employee updated";
+	}
+
 	@GetMapping("/pagination")
 	public List<Employee> pagination(@RequestParam int pageNo, @RequestParam int pageSize){
 		return employeeService.getAllEmployeePagination(pageNo,pageSize);
@@ -91,6 +109,11 @@ public class EmployeeRestController {
 
 //		return employeeList;
 
+	}
+
+	@GetMapping("/sorting")
+	public List<Employee> sortingEmployee(){
+		return employeeService.sortedEmploye();
 	}
 
 }

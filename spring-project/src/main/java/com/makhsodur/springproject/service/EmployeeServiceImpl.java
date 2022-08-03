@@ -1,10 +1,12 @@
 package com.makhsodur.springproject.service;
+import com.makhsodur.springproject.dao.AddressRepository;
 import com.makhsodur.springproject.dao.EmployeeRepository;
 import com.makhsodur.springproject.entity.Employee;
 import com.makhsodur.springproject.exceptions.EmployeeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.Optional;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
+    private AddressRepository addressRepository;
 
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository employeeRepository){
@@ -22,6 +25,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findAll() {
+
+
         return employeeRepository.findAll();
     }
 
@@ -59,12 +64,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getNamesUseOr(String firstName, String lastName) {
-        return employeeRepository.findByFirstNameOrLastName(firstName,lastName);
+        return employeeRepository.getByFirstNameOrLastName(firstName,lastName);
+    }
+
+    @Override
+    public Integer updateEmployeee(int id, String firstName){
+        return employeeRepository.updateFirstName(id,firstName);
     }
 
     @Override
     public List<Employee> getAllEmployeePagination(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo -1,pageSize);
         return employeeRepository.findAll(pageable).getContent();
+    }
+
+    @Override
+    public List<Employee> sortedEmploye() {
+        Sort sort = Sort.by(Sort.Direction.DESC,"firstName");
+        return employeeRepository.findAll(sort);
     }
 }
